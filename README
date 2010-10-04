@@ -38,3 +38,5 @@ By default the results of visiting a node are grouped by nid.
 It's possible to change this by changing the name of the module
 ( e.g. "node" instead of "node-${__evalVar(${idx})}" )
 
+planning to work on a drush command for easily generating and modifying the .jmx file
+

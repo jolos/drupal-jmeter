@@ -1,2 +1,40 @@
 A jmeter .jmx file for drupal 7 based on the Drupal Performance Suite by Jacob Singh
 ( http://github.com/jacobSingh/Drupal-Performance-Testing-Suite )
+
+Usage:
+======
+
+Before executing the test plan you should set some variables:
+
+in General:
+	- outputDir 
+	- delay ( set to TRUE if you want to introduce delay )
+
+in Drupal-7:
+	- path
+
+
+To get "Authenticated Browsing" and "Comment" working,
+You should add at least 1 user and 1 corresponding password  to "Possible Users"
+Adding multiple users is possible
+
+example:
+
+Name: 		Value:
+user_1		drupal1
+pass_1		drupal1pw
+user_2		drupal2
+pass_2		drupal2pw
+number_usr	2		-> you should not forget to increment the number of users
+
+
+Jmeter will randomly select 1 of the inputed users
+
+
+Some notes:
+==========
+
+By default the results of visiting a node are grouped by nid.
+It's possible to change this by changing the name of the module
+( e.g. "node" instead of "node-${__evalVar(${idx})}" )
+

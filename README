@@ -1,42 +1,60 @@
 A jmeter .jmx file for drupal 7 based on the Drupal Performance Suite by Jacob Singh
 ( http://github.com/jacobSingh/Drupal-Performance-Testing-Suite )
 
+Dependencies:
+=============
+  ant
+  ant-contrib
+  jmeter
+
 Usage:
 ======
 
-Before executing the test plan you should set some variables:
+For executing the following are required:
+  - a directory "properties" containing property files 
+  - the drupal7.jmx file
+  - .csv files containing either users and passwords either the pages to visit
 
-in General:
-	- outputDir 
-	- delay ( set to TRUE if you want to introduce delay )
+The drupal7.jmx is as generic as possible, the properties are defined
+in a ".properties" file located in the properties folder
 
-in Drupal-7:
-	- path
+If you want to add a new configuration, just add a new .properties file in the properties folder
 
-
-To get "Authenticated Browsing" and "Comment" working,
-You should add at least 1 user and 1 corresponding password  to "Possible Users"
-Adding multiple users is possible
+configuration of a .properties file
+---------------------------------
+Before creating this file, it can be useful to take a look at the .jmx file
 
 example:
 
-Name: 		Value:
-user_1		drupal1
-pass_1		drupal1pw
-user_2		drupal2
-pass_2		drupal2pw
-number_usr	2		-> you should not forget to increment the number of users
+meta.name=prop2/ 	#write the output of this test to this directory ( trailing slash is required )
+output.prefix=		#if you want to add a prefix to the output, ( can be handy, when you want to output everything to 1 directory )
+delay=FALSE  		#if TRUE, introduce delay to simulate user interaction
 
+#properties for anonymous browsing
+anon.url_file=anon.csv 	#specify the the URL's that will be visited
+anon.threads=0		#the number of threads, disabled if 0
+anon.lcount=1		#number of times, the thread will run
+anon.ramp=60		#The ramp up period
+ 
+#and similar for authenticated browsing
+auth.url_file=auth.csv 
+auth.usr_file=auth-usr.csv
+auth.threads=2
+auth.lcount=5
+auth.ramp=30
 
-Jmeter will randomly select 1 of the inputed users
+starting the tests
+------------------
 
+cd into the directory containing 'build.xml'
+and just type:
 
-Some notes:
-==========
+ant
 
-By default the results of visiting a node are grouped by nid.
-It's possible to change this by changing the name of the module
-( e.g. "node" instead of "node-${__evalVar(${idx})}" )
+You can delete the output as follows:
 
-planning to work on a drush command for easily generating and modifying the .jmx file
+ant clean
 
+You can generate html for a result log as follows:
+
+ant make_html -Dxmlfile=./output/prop1/overall-summary.xml -Dhtmlfile=./overall-summary.html

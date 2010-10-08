@@ -1,5 +1,4 @@
-A jmeter .jmx file for drupal 7 based on the Drupal Performance Suite by Jacob Singh
-( http://github.com/jacobSingh/Drupal-Performance-Testing-Suite )
+A jmeter .jmx file for drupal 7 
 
 Dependencies:
 =============
@@ -58,3 +57,21 @@ ant clean
 You can generate html for a result log as follows:
 
 ant make_html -Dxmlfile=./output/prop1/overall-summary.xml -Dhtmlfile=./overall-summary.html
+
+Tools:
+------
+
+The 'tools' directory contains a very simple python script to generate 
+scatter plots to easily compare the results, this script is very alpha-ish. 
+So handle with care :-)
+
+credits
+-------
+
+.jmx file based on the Drupal Performance Suite by Jacob Singh
+( http://github.com/jacobSingh/Drupal-Performance-Testing-Suite )
+
+xslt based on
+http://www.programmerplanet.org/pages/projects/jmeter-ant-task.php
+
+

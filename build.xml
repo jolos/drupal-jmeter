@@ -1,0 +1,49 @@
+<project name="DrupalJmeter" basedir="." default="main">
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+  <classpath>
+    <pathelement location="/usr/share/java/ant-contrib.jar"/>
+  </classpath>
+</taskdef>
+
+  <description>
+    automates drupal performance testing
+  </description>
+  <property name='dir' location='.'/>  
+  <property name='propdir' location="${dir}/properties/"/>
+  <property name='testplan' location="${dir}/drupal7.jmx"/> 
+  <property name='outputdir' location="${dir}/output"/> 
+  
+  <target name='init'>
+    <mkdir dir="${outputdir}"/>
+    <mkdir dir="${outputdir}"/>
+  </target>
+
+  <target name='main' depends='init'>
+    <foreach target='exec_test' param='file'>
+      <fileset dir="${propdir}" casesensitive="yes">
+	<include name="**/*.properties"/>
+      </fileset>    
+    
+    </foreach>
+
+  </target>
+  
+  <target name='exec_test'>
+    <echo message="executing cmd: jmeter -n -t ${testplan} -p ${file} -Joutputdir=${outputdir}" />
+      <exec dir="${dir}" executable='jmeter'>
+	<arg line="-n -t ${testplan} -p ${file} -Joutputdir=${outputdir}"/>
+      </exec>
+  </target>
+  
+  <target name='clean'>
+    <delete dir="${outputdir}"/>
+  </target>
+  
+  <target name='make_html'>
+    <xslt
+    in="${xmlfile}"
+    out="${htmlfile}"
+    style="${dir}/jmeter-results-report.xsl"/>
+  </target>
+      
+</project>
